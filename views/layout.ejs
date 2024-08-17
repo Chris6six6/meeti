@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meti - <%- nombrePagina %></title>
+    <link rel="stylesheet" href="https://necolas.github.io/normalize.css/8.0.1/normalize.css">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,700,900|Staatliches" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.css" integrity="sha512-v5YmWLm8KqAAmg5808pETiccEohtt8rPVMGQ1jA6jqkWVydV5Cuz3nJ9fQ7ittSxvuqsvI9RSGfVoKPaAJZ/AQ=="crossorigin="">
+    <link rel="stylesheet" href="/css/trix.css">
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+    <header class="site-header contenedor">
+        <a href="/">
+            <img src="/img/logo.png">
+        </a>
+
+        <nav class="nav">
+            <a href="#">Crear grupo</a>
+            <a href="#">Iniciar sesion</a>
+            <a href="/crear-cuenta">Regitrarse</a>
+        </nav>
+    </header>
+
+    <%- body%>
+    
+    <footer class="site-footer contenedor">
+        <nav class="nav">
+            <a href="#">Crear grupo</a>
+            <a href="#">Iniciar sesion</a>
+            <a href="/crear-cuenta">Regitrarse</a>
+        </nav>
+
+        <p class="copyright">Todos los derechos reservados Meti <%- year %></p>
+    </footer>
+
+</body>
+</html>
