@@ -1,5 +1,6 @@
 const Usuarios = require('../models/Usuarios.js');
 const  validator = require('express-validator');
+const enviarEmail = require('../handlers/email.js');
 
 exports.formCrearCuenta = (req, res) => {
     res.render('crear-cuenta', {
@@ -23,10 +24,10 @@ exports.crearNuevoUsuario = async (req, res) => {
 
     try {
         // Extraer los datos
-        const { email } = req.body;
+        const usuario = req.body;
 
         // Verificar que el usuario no esté duplicado
-        const existeUsuario = await Usuarios.findOne({ where: { email } });
+        const existeUsuario = await Usuarios.findOne({ where: { email: usuario.email } });
         if (existeUsuario) {
             req.flash('error', 'El usuario ya está registrado');
             return res.redirect('/crear-cuenta');
@@ -34,6 +35,17 @@ exports.crearNuevoUsuario = async (req, res) => {
 
         // Crear nuevo usuario
         await Usuarios.create(req.body);
+
+        // URL de confirmacion
+        const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
+
+        // Enviar email de confirmacion
+        await enviarEmail.enviarEmail({
+            usuario,
+            url,
+            subject: 'Confirma tu cuenta de Meeti',
+            archivo: 'confirmar-cuenta'
+        })
 
         // Si no hay errores
         req.flash('exito', 'Registro con éxito, confirma el email que te hemos enviado');
@@ -46,6 +58,23 @@ exports.crearNuevoUsuario = async (req, res) => {
     }
 };
 
+exports.confirmarCuenta = async(req, res, next) => {
+    // Verificar que el usuario existe
+    const usuario = await Usuarios.findOne({ where: { email: req.params.correo } });
+
+    if(!usuario) {
+        req.flash('error', 'No existe el usuario');
+        res.redirect('/crear-cuenta');
+        return next();
+    }
+
+    // Si el usuario existe confirmar y redireccionar
+    usuario.activo = 1;
+    await usuario.save();
+
+    req.flash('exito', 'La cuenta se ha confirmado, ya puedes iniciar sesion');
+    res.redirect('/iniciar-sesion');
+}
 
 exports.formIniciarSesion = async(req, res) => {
     res.render('iniciar-sesion', {

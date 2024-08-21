@@ -4,10 +4,12 @@ const path = require('path');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const passport = require('./config/passport.js');
 const router = require('./routes');
 
 // Configuracion y modelos BD
 const db = require('./config/db.js');
+const { pass } = require('./config/email.js');
 require('./models/Usuarios.js');
 db.sync().then(() => console.log('DB Conectada')).catch((error) => console.log(error))
 
@@ -42,6 +44,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false // Aquí la opción está correctamente escrita
 }));
+
+// Inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Agregar flash messages
 app.use(flash());
