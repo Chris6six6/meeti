@@ -39,21 +39,26 @@
         </ul>
     </div>
 
-    <div>
+    <di class="seccion-admin">
         <h2>Tus grupos</h2>
-
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <h3>Bock chain Guadalajara</h3>
-                </div>
-                <div class="acciones contenedor-botones">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-        </ul>    
+        <% if(grupos.length) { %>
+            <ul>
+                <% grupos.forEach(grupo => { %>
+                <li>
+                    <div class="informacion-admin">
+                        <h3><%= grupo.nombre %></h3>
+                    </div>
+                    <div class="acciones contenedor-botones">
+                        <a href="/editar-grupo/<%= grupo.id %>" class="btn btn-verde">Editar</a>
+                        <a href="/imagen-grupo/<%= grupo.id %>" class="btn btn-azul2">Imagen</a>
+                        <a href="/eliminar-grupo/<%= grupo.id %>" class="btn btn-rojo">Eliminar</a>
+                    </div>
+                </li>
+                <% }) %>
+            </ul>    
+        <% } else {%>
+            <p>No tienes grupos creados</p>
+        <% } %>
     </div>
 
 </main>
