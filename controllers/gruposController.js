@@ -2,6 +2,7 @@ const Categorias = require('../models/Categorias.js');
 const Grupos = require('../models/Grupos.js');
 const shortid = require('shortid');
 const multer = require('multer');
+const fs = require('fs');
 
 const configuracionMulter = {
     limits: { fileSize: 1 * 1024 * 1024 }, // 1 MB
@@ -105,7 +106,7 @@ exports.editarGrupo = async(req, res) => {
     // Si no hay grupos o no es el dueño
     if(!grupo) {
         req.flash('error', 'Operacion no valida');
-        res.redirect('/administracion');
+        res.redirect('/iniciar-sesion');
         return next();
     }
 
@@ -121,5 +122,100 @@ exports.editarGrupo = async(req, res) => {
     // Guardar los datos en la base de datos
     await grupo.save();
     req.flash('exito', 'Cambios actualizados');
+    res.redirect('/administracion');
+}
+
+// Form editar imagen
+exports.formEditarImagen = async(req, res) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } });
+
+    res.render('imagen-grupo', {
+        nombrePagina: `Editar imagen gupo: ${grupo.nombre}`,
+        grupo
+    })
+}
+
+// Modifica la imagen en la BD y elimina la anterior
+exports.editarImagen = async(req, res) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } });
+    
+    // Si no hay grupos o no es el dueño
+    if(!grupo) {
+        req.flash('error', 'Operacion no valida');
+            res.redirect('/iniciar-sesion');
+            return next();
+        }
+        
+        // Si hay imagen anterior y nueva
+        if(req.file && grupo.imagen) {
+        const imagenAnterirorPath = __dirname + `/../public/uploads/grupos/${grupo.imagen}`;
+        
+        // Eliminar archivo con filesystem
+        fs.unlink(imagenAnterirorPath, (error) => {
+            if(error) {
+                console.log(error);
+            }
+            return;
+        })
+    }
+    
+    // Si hay imagen nueva la guardamos
+    if(req.file) {
+        grupo.imagen = req.file.filename;
+    }
+    
+    // Guardar en la BD
+    await grupo.save();
+    req.flash('exito', 'Imagen actializada');
+    res.redirect('/administracion');
+    
+}
+
+// Form eliminar grupo
+exports.formEliminarGrupo = async(req, res) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } });
+
+    if(!grupo) {
+        req.flash('error', 'Operacion no valida');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    res.render('eliminar-grupo', {
+        nombrePagina: `Eliminar grupo: ${grupo.nombre}`,
+    })
+}
+// Eliminar grupo e imagen
+exports.eliminarGrupo = async(req, res) => {
+    const grupo = await Grupos.findOne({ where: { id: req.params.grupoId, usuarioId: req.user.id } });
+
+    if(!grupo) {
+        req.flash('error', 'Operacion no valida');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    // Si hay imagen la elimina
+    if(grupo.imagen) {
+        const imagenAnterirorPath = __dirname + `/../public/uploads/grupos/${grupo.imagen}`;
+        
+        // Eliminar archivo con filesystem
+        fs.unlink(imagenAnterirorPath, (error) => {
+            if(error) {
+                console.log(error);
+            }
+            return;
+        })
+    }
+
+    // Eliminar el grupo
+    await Grupos.destroy({
+        where: {
+            id: req.params.grupoId
+        }
+    });
+
+    // Redireccionar y mensaje flash
+    req.flash('exito', 'Grupo eliminado');
     res.redirect('/administracion');
 }
