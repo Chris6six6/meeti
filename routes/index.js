@@ -6,6 +6,7 @@ const usuariosController = require('../controllers/usuariosController.js');
 const authController = require('../controllers/authController.js');
 const adminController = require('../controllers/adminController.js');
 const gruposController = require('../controllers/gruposController.js');
+const meetiController = require('../controllers/meetiController.js');
 
 module.exports = function() {
     
@@ -67,6 +68,12 @@ module.exports = function() {
     router.post('/eliminar-grupo/:grupoId',
         authController.usuarioAutenticado,
         gruposController.eliminarGrupo
+    );
+
+    // Nuevos meeti
+    router.get('/nuevo-meeti',
+        authController.usuarioAutenticado,
+        meetiController.formNuevoMeeti
     );
 
     return router;    

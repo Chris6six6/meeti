@@ -1,10 +1,10 @@
 const Grupos = require('../models/Grupos');
 
-exports.panelAdministracion = async (req, res) => {
+exports.formNuevoMeeti = async (req, res) => {
     const grupos = await Grupos.findAll({ where: { usuarioId: req.user.id } });
 
-    res.render('administracion', {
-        nombrePagina : 'Panel de Administracion',
+    res.render('nuevo-meeti', {
+        nombrePagina : 'Crear nuevo meeti',
         grupos
     })
 }

@@ -627,3 +627,13 @@ aside .ubicacion {
 aside img {
     display: block;
 }
+
+.contenedor-mapa {
+    height: 400px;
+    width: 100%;
+    border: 1px solid #0f1;
+}
+.leaflet-container {
+    width: 100%;
+    height: 100%;
+}
