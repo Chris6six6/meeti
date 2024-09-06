@@ -13,6 +13,7 @@ const { pass } = require('./config/email.js');
 require('./models/Usuarios.js');
 require('./models/Categorias.js');
 require('./models/Grupos.js');
+require('./models/Meeti.js');
 db.sync().then(() => console.log('DB Conectada')).catch((error) => console.log(error))
 
 // Variables de desarrollo
