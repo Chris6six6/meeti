@@ -81,5 +81,26 @@ module.exports = function() {
         meetiController.crearMeeti
     );
 
+    // Editar Meeti
+    router.get('/editar-meeti/:id',
+        authController.usuarioAutenticado,
+        meetiController.formEditarMeeti
+    )
+    router.post('/editar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.editarMeeti
+    );
+
+     // Eliminar Meeti
+     router.get('/eliminar-meeti/:id',
+        authController.usuarioAutenticado,
+        meetiController.formEliminarMeeti
+    );
+    router.post('/eliminar-meeti/:id',
+        authController.usuarioAutenticado,
+        meetiController.eliminarMeeti
+    );
+
+
     return router;    
 }
