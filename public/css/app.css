@@ -637,3 +637,21 @@ aside img {
     width: 100%;
     height: 100%;
 }
+
+#ubicacion-meeti {
+    height: 400px;
+    width: 85%;
+}
+
+@media (min-width: 768px) {
+    .cercanos {
+        display: flex;
+        justify-content: space-between;
+    }
+    .cercanos .card {
+        flex: 0 0 calc(33.3% - 2rem);
+    }
+    .cercanos .informacion {
+        flex: 1;
+    }
+}

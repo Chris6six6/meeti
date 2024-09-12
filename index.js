@@ -14,6 +14,7 @@ require('./models/Usuarios.js');
 require('./models/Categorias.js');
 require('./models/Grupos.js');
 require('./models/Meeti.js');
+require('./models/Comentarios.js');
 db.sync().then(() => console.log('DB Conectada')).catch((error) => console.log(error))
 
 // Variables de desarrollo

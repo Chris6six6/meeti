@@ -8,10 +8,56 @@ const adminController = require('../controllers/adminController.js');
 const gruposController = require('../controllers/gruposController.js');
 const meetiController = require('../controllers/meetiController.js');
 
+const meetiControllerFE = require('../controllers/frontend/meetiControllerFE.js');
+
 module.exports = function() {
     
-    /* Area publica*/
+    /** AREA PUBLICA */
     router.get('/', homeController.home);
+
+    // Muestra un meeti
+    router.get('/meeti/:slug', 
+        meetiControllerFE.mostrarMeeti
+    );
+
+    // Confirma la asistencia a meeti
+    router.post('/confirmar-asistencia/:slug', 
+        meetiControllerFE.confirmarAsistencia
+    );
+
+    /** Muestra asistentes al meeti */
+    router.get('/asistentes/:slug',
+        meetiControllerFE.mostrarAsistentes
+    );
+
+    /** Agrega Comentarios en el Meeti */
+    router.post('/meeti/:id', 
+        //comentariosControllerFE.agregarComentario
+    );
+    /** Elimina comentarios en el meeti */
+    router.post('/eliminar-comentario',
+        //comentariosControllerFE.eliminarComentario
+    );
+
+    // muestra perfiles en el front end
+    router.get('/usuarios/:id', 
+        //usuariosControllerFE.mostrarUsuario
+    );
+
+    // muestra los grupos en el front end
+    router.get('/grupos/:id', 
+        //gruposControllerFE.mostrarGrupo
+    );
+
+    // Muestra meeti's por categoria
+    router.get('/categoria/:categoria',
+        meetiControllerFE.mostrarCategoria
+    );
+
+    // Añade la busqueda
+    router.get('/busqueda', 
+        //busquedaControllerFE.resultadosBusqueda
+    )
     
     // Crear cuenta
     router.get('/crear-cuenta', usuariosController.formCrearCuenta);
