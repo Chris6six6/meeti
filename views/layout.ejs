@@ -53,8 +53,12 @@
     <script src="https://unpkg.com/esri-leaflet@3.0.8/dist/esri-leaflet.js"></script>
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.13/dist/esri-leaflet-geocoder.js"></script>
     <script src="https://unpkg.com/leaflet-geosearch@latest/dist/bundle.min.js"></script>
-    <script src="/dist/bundle.js"></script>
-    
+
+    <% if(locals.grupos) { %>
+        <script src="/dist/mapa.js"></script>
+    <% } %>
+
+    <script src="/dist/asistencia.js"></script>
     <script src="/js/meeti.js""></script>
 
 </body>
