@@ -147,34 +147,29 @@ exports.editarPerfil = [
     // Validar y sanitizar los campos
     body('nombre').trim().escape(),
     body('email').isEmail().normalizeEmail(),
-    body('descripcion').optional().trim().escape(),
+    body('descripcion').optional().trim(),
 
     async (req, res) => {
-        // Manejo de errores de validación
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            // Si hay errores, los manejas de alguna manera, por ejemplo, mostrar un mensaje
             req.flash('error', 'Hubo errores en los datos ingresados');
             return res.redirect('/administracion');
         }
 
-        // Encontrar el usuario por el ID
         const usuario = await Usuarios.findByPk(req.user.id);
-
-        // Leer datos del form
         const { nombre, descripcion, email } = req.body;
 
-        // Asignar los valores sanitizados
+        // Sanitize descripcion (si es necesario, usando una biblioteca)
         usuario.nombre = nombre;
         usuario.descripcion = descripcion;
         usuario.email = email;
 
-        // Guardar en la BD
         await usuario.save();
         req.flash('exito', 'Cambios Guardados Correctamente');
         res.redirect('/administracion');
     }
 ];
+
 
 // Muestra el formulario para modificar el password
 exports.formCambiarPassword = (req, res) => {
