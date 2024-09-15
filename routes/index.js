@@ -11,6 +11,8 @@ const meetiController = require('../controllers/meetiController.js');
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE.js');
 const usuariosControllerFE = require('../controllers/frontend/usuariosControllerFE.js');
 const gruposControllerFE = require('../controllers/frontend/gruposControllerFE.js');
+const comentariosControllerFE = require('../controllers/frontend/comentariosControllerFE.js');
+const busquedaControllerFE = require('../controllers/frontend/busquedaControllerFE.js');
 
 module.exports = function() {
     
@@ -49,16 +51,16 @@ module.exports = function() {
 
     // Añade la busqueda
     router.get('/busqueda', 
-        //busquedaControllerFE.resultadosBusqueda
+        busquedaControllerFE.resultadosBusqueda
     )
 
     /** Agrega Comentarios en el Meeti */
     router.post('/meeti/:id', 
-        //comentariosControllerFE.agregarComentario
+        comentariosControllerFE.agregarComentario
     );
     /** Elimina comentarios en el meeti */
     router.post('/eliminar-comentario',
-        //comentariosControllerFE.eliminarComentario
+        comentariosControllerFE.eliminarComentario
     );
     
     // Crear cuenta

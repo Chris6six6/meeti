@@ -4,9 +4,10 @@
   "description": "Proyecto meti mvc",
   "main": "index.js",
   "scripts": {
+    "desarrollo": "concurrently \"npm run dev\" \"npm run watch\" ",
     "dev": "nodemon ./index.js",
     "watch": "webpack --watch --mode development",
-    "start": "concurrently \"npm run dev\" \"npm run watch\" "
+    "start": "node ./index.js"
   },
   "author": "Chris666",
   "license": "ISC",
@@ -38,6 +39,7 @@
     "sequelize": "^6.37.3",
     "shortid": "^2.2.16",
     "slug": "^9.1.0",
+    "sweetalert2": "^11.14.0",
     "uuid": "^10.0.0"
   }
 }
